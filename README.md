@@ -17,6 +17,7 @@ Run bash script to retrieve data:
 
 * Retrieves list of validators => `validators.csv`
 * Queries delegations for each validator and saves as `.csv` file
+* Optional `--height <block-height>` parameter can be added for specific block height
 
 Run python script to compute statistics:
 
