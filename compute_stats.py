@@ -42,8 +42,8 @@ def compute_delegations(moniker: str) -> (int, float):
         top10df = df.nlargest(n=10, columns=['amount'])
         # Compute proportion from top 10 delegators
         top10pc = top10df['nom'].sum() / nom_delegated
-        print(f"Top 10 delegators (Share of delegations: {top10pc*100:.4}%)\n---")
-        #print(top10df,"\n----")
+        print(f"Top 10 delegators (Share of delegations: {top10pc*100:.4}%):\n")
+        print(top10df,"\n----")
     else:
         top10pc = 0
     return (num_delegations, nom_delegated, top10pc)
@@ -58,6 +58,13 @@ if __name__ == "__main__":
     _header_row : List[str]=['moniker', 'address']
     vals = pd.read_csv(validators_csv, header=None, names=_header_row).to_dict('records')
 
+    # Read blockheight
+    try:
+        with open('blockheight.txt') as f:
+            block_height = f.read().strip()
+    except Exception as e:
+        print(e)
+        block_height = ""
     # Compute delegation statistics
     for validator in vals.copy():
         (num, nom, top10pc) = compute_delegations(validator['moniker'])
@@ -84,9 +91,10 @@ if __name__ == "__main__":
     xcva_pc : float = xcva_total / df['total'].sum() * 100
 
     # Display summary
-    print("Validator Summary Statistics")
-    print("============================")
+    print(f"Validator Summary Statistics")
+    print("==============================")
     print(df[['moniker', 'address', 'delegators', 'pc', 'total', 'top10pc']].round(2))
-    print("============================")
-    print(f"XCVA share: {xcva_pc:.4}%\n---\n")
+    print("==============================")
+    print(f"Block Height : {block_height}")
+    print(f"XCVA share   : {xcva_pc:.4}%\n---\n")
     

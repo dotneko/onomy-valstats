@@ -10,13 +10,11 @@ PARAM=$1
 if [[ ${PARAM::8} == "--height" ]] || [[ ${PARAM::2} == '-h' ]]; then
         re='^[0-9]+$'
         if [[ $2 =~ $re ]]; then
-                HEIGHT_FLAG="--height $2"
-        else
-		HEIGHT_FLAG="--height $HEIGHT"
+		HEIGHT=$2
         fi
-else
-	HEIGHT_FLAG="--height $HEIGHT"
 fi
+echo $HEIGHT > blockheight.txt
+HEIGHT_FLAG="--height $HEIGHT"
 echo Getting validator full data =\> $VALIDATORS_FULL
 $DAEMON q staking validators | yq -o=json > $VALIDATORS_FULL
 echo Extracting validator moniker and addresses =\> $VALIDATORS
