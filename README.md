@@ -23,3 +23,4 @@ Run python script to compute statistics:
 
 `python3 compute_stats.py`
 
+Alternately, install [jupyter notebook](https://docs.jupyter.org/en/latest/install/notebook-classic.html) and then launch `stats-notebook.ipynb` for further analysis.
